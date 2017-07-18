@@ -11,7 +11,7 @@ export class EpisodeService {
     }
     
     listEpisode(seriesId: string){
-        var url = 'http://localhost:4567/episode/series/' + encodeURI(seriesId);
+        var url = 'http://192.168.1.10:4567/episode/series/' + encodeURI(seriesId);
         var response = this.http.get(url).map(res => res.json());
         return response;
     }

@@ -11,13 +11,13 @@ export class RecentAndSearchService {
     }
   
     listsRecent() {
-        var url = 'http://localhost:4567/recent';
+        var url = 'http://192.168.1.10:4567/recent';
         var response = this.http.get(url).map(res => res.json());
         return response;
     }
 
     search(term: string){
-        var url = 'http://localhost:4567/series/search?term=' + encodeURI(term);
+        var url = 'http://192.168.1.10:4567/series/search?term=' + encodeURI(term);
         var response = this.http.get(url).map(res => res.json());
         return response;
     }
