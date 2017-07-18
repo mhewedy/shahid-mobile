@@ -15,4 +15,10 @@ export class EpisodeService {
         var response = this.http.get(url).map(res => res.json());
         return response;
     }
+
+    setAsWatched(episodeId: string){
+        var url = 'http://192.168.1.10:4567/episode/watched/' + encodeURI(episodeId);
+        var response = this.http.get(url).map(res => res.json());
+        return response;
+    }
 }

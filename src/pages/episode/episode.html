@@ -10,7 +10,8 @@
   <ion-list>
     <button ion-item *ngFor="let item of items; let i = index" (click)="itemTapped($event, item)">
       <div padding style="font-size: 20px">
-        الحلقة رقم {{i + 1}}
+        الحلقة رقم {{i + 1}} 
+        <span *ngIf="item.watched" > ✔ </span>
       </div>
     </button>
   </ion-list>
