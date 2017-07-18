@@ -1,7 +1,7 @@
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
   
-export class RecentService {  
+export class RecentAndSearchService {  
     static get parameters() {
         return [[Http]];
     }
@@ -10,9 +10,17 @@ export class RecentService {
          
     }
   
-    listTags() {
+    listsRecent() {
         var url = 'http://localhost:4567/recent';
         var response = this.http.get(url).map(res => res.json());
         return response;
     }
+
+    search(term: string){
+        var url = 'http://localhost:4567/series/search?term=' + encodeURI(term);
+        var response = this.http.get(url).map(res => res.json());
+        return response;
+    }
+
+
 }

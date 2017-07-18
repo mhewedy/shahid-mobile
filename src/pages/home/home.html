@@ -5,10 +5,9 @@
     </button>
   
     <ion-searchbar
-      [(ngModel)]="myInput"
-      [showCancelButton]="shouldShowCancel"
-      (ionInput)="onInput($event)"
-      (ionCancel)="onCancel($event)">
+      [(ngModel)]="term"
+      autocorrect="off"
+      (change)="search($event)">
     </ion-searchbar>
 
   </ion-navbar>
@@ -21,4 +20,7 @@
       <span style="vertical-align:top; font-size: 20px">{{item.title}}</span>
     </button>
   </ion-list>
+  <div *ngIf="showNoDataFound" padding>
+      لا توجد نتيجة للبحث, حاول مره أخرى
+  </div> 
 </ion-content>

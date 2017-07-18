@@ -1,24 +1,32 @@
-import { RecentService } from './service';
+import { RecentAndSearchService } from './service';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [RecentService]
+  providers: [RecentAndSearchService]
 })
 export class HomePage {
 
   items: Array<{id: number, sid: string, title: string, posterUrl: string}>;
-  selectedItem: any;
+  term: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private recentService: RecentService) {
+  showNoDataFound: boolean = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private recentAndSearchService: RecentAndSearchService) {
 
     var navItems: any = navParams.get('items');
+    console.log("navitems", navItems);
     if (navItems != null){
-        this.items = navItems; 
+        if (navItems.length > 0){
+          this.items = navItems; 
+        }else{
+            this.showNoDataFound = true;
+            console.log("no data found!")
+        }
     }else{
-      this.recentService.listTags().subscribe(
+      this.recentAndSearchService.listsRecent().subscribe(
             data => {
               this.items = data; 
               console.log(data);
@@ -28,6 +36,22 @@ export class HomePage {
             },
             () => console.log('Movie Search Complete')
           );
+    }
+  }
+
+  search(event) {
+    if (this.term){
+      this.recentAndSearchService.search(this.term).subscribe(
+              data => {
+                this.navCtrl.push(HomePage, {
+                  items: data
+                });
+              },
+              err => {
+                console.log(err);
+              }, 
+              () => console.log("completed")
+          )
     }
   }
 
