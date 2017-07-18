@@ -1,37 +1,43 @@
+import { HomePage } from './../home/home';
+import { TagService } from './service';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-list',
-  templateUrl: 'list.html'
+  templateUrl: 'list.html',
+  providers: [TagService]
 })
 export class ListPage {
   selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items: Array<string>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tagService: TagService) {
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    this.tagService.listTags().subscribe(
+      data => {
+        this.items = data; 
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      },
+      () => console.log('Movie Search Complete')
+    );
   }
 
   itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
+    
+    this.tagService.findByTag(item).subscribe(
+        data => {
+          this.navCtrl.push(HomePage, {
+            items: data
+          });
+        },
+        err => {
+          console.log(err);
+        }, 
+        () => console.log("completed")
+    )
   }
 }
