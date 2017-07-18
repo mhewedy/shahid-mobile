@@ -1,3 +1,4 @@
+import { EpisodePage } from './../episode/episode';
 import { RecentAndSearchService } from './service';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -53,6 +54,12 @@ export class HomePage {
               () => console.log("completed")
           )
     }
+  }
+
+  itemTapped(event, item){
+      this.navCtrl.push(EpisodePage, {
+        item: item
+      });
   }
 
 }
