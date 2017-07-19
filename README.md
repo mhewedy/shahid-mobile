@@ -1,26 +1,11 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+See https://github.com/mhewedy/shahid/blob/master/README.md
 
-## How to use this template
+To run use: `ionic serve`
+To deploy to android use: `ionic cordova run android --device`
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+You might need to change the service IP at: 
+* https://github.com/mhewedy/shahid-mobile/blob/master/src/pages/home/service.ts
+* https://github.com/mhewedy/shahid-mobile/blob/master/src/pages/list/service.ts
+* https://github.com/mhewedy/shahid-mobile/blob/master/src/pages/episode/service.ts
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
-
-### With the Ionic CLI:
-
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
-
-```bash
-$ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
-```
-
-Then, to run it, cd into `mySideMenu` and run:
-
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
-
-Substitute ios for android if not on a Mac.
-
+TODO: [I need to have single place to include the service IP](https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2)
