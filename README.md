@@ -1,6 +1,6 @@
 See: https://github.com/mhewedy/shahid
 
-To run use: `ionic serve`
+To run use: `ionic serve`   
 To deploy to android use: `ionic cordova run android --device`
 
 You might need to change the service IP at: 
