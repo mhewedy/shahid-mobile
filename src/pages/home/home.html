@@ -7,19 +7,22 @@
     <ion-searchbar
       [(ngModel)]="term"
       autocorrect="off"
-      (change)="search($event)">
+      (change)="search($event)"
+      placeholder="بحث">
     </ion-searchbar>
 
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-img width="223" height="126" src="{{item.posterUrl}}"></ion-img>
-      <span style="vertical-align:top; font-size: 16px">{{item.title}}</span>
-    </button>
-  </ion-list>
+  <ion-grid>
+    <ion-row *ngFor="let itemPairs of items">
+      <ion-col col-6 *ngFor="let item of itemPairs" (click)="itemTapped($event, item)">
+        <img width="160" height="90" [src]="item.posterUrl" />
+        <div style="vertical-align:top; font-size: 16px; text-align: center">{{item.title}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div *ngIf="showNoDataFound" padding>
       لا توجد نتيجة للبحث, حاول مره أخرى
   </div> 

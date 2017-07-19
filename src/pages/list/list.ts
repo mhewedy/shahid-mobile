@@ -45,8 +45,7 @@ export class ListPage {
 
   private showServerIpMissingToast(err: Error){
     if (err.constructor.name === 'NativeStorageError'){
-      let toast = this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط',duration: 3000});
-      toast.present();
+      this.toastController.create({message: JSON.stringify(err) ,duration: 3000}).present();
     }
   }
 }
