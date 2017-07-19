@@ -72,7 +72,7 @@ export class HomePage {
 
   private showServerIpMissingToast(err: Error){
     if (err.constructor.name === 'NativeStorageError'){
-      this.toastController.create({message: JSON.stringify(err) ,duration: 3000}).present();
+      this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط' ,duration: 3000}).present();
     }
   }
 }
