@@ -1,7 +1,7 @@
 import { HomePage } from './../home/home';
 import { TagService } from './service';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-list',
@@ -12,7 +12,8 @@ export class ListPage {
   selectedItem: any;
   items: Array<string>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tagService: TagService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private tagService: TagService, private toastController: ToastController) {
 
     this.tagService.listTags().subscribe(
       data => {
@@ -20,14 +21,14 @@ export class ListPage {
         console.log(data);
       },
       err => {
+        this.showServerIpMissingToast(err)
         console.log(err);
       },
-      () => console.log('Movie Search Complete')
+      () => console.log('completed')
     );
   }
 
   itemTapped(event, item) {
-    
     this.tagService.findByTag(item).subscribe(
         data => {
           this.navCtrl.push(HomePage, {
@@ -35,9 +36,17 @@ export class ListPage {
           });
         },
         err => {
+          this.showServerIpMissingToast(err)
           console.log(err);
         }, 
         () => console.log("completed")
     )
+  }
+
+  private showServerIpMissingToast(err: Error){
+    if (err.constructor.name === 'NativeStorageError'){
+      let toast = this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط',duration: 3000});
+      toast.present();
+    }
   }
 }

@@ -2,6 +2,7 @@ import { EpisodePage } from './../episode/episode';
 import { RecentAndSearchService } from './service';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -15,10 +16,10 @@ export class HomePage {
 
   showNoDataFound: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private recentAndSearchService: RecentAndSearchService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private recentAndSearchService: RecentAndSearchService, private toastController: ToastController) {
 
     var navItems: any = navParams.get('items');
-    console.log("navitems", navItems);
     if (navItems != null){
         if (navItems.length > 0){
           this.items = navItems; 
@@ -30,12 +31,12 @@ export class HomePage {
       this.recentAndSearchService.listsRecent().subscribe(
             data => {
               this.items = data; 
-              console.log(data);
             },
             err => {
+              this.showServerIpMissingToast(err)
               console.log(err);
             },
-            () => console.log('Movie Search Complete')
+            () => console.log('completed')
           );
     }
   }
@@ -44,11 +45,10 @@ export class HomePage {
     if (this.term){
       this.recentAndSearchService.search(this.term).subscribe(
               data => {
-                this.navCtrl.push(HomePage, {
-                  items: data
-                });
+                this.navCtrl.push(HomePage, {items: data});
               },
               err => {
+                this.showServerIpMissingToast(err)
                 console.log(err);
               }, 
               () => console.log("completed")
@@ -60,6 +60,13 @@ export class HomePage {
       this.navCtrl.push(EpisodePage, {
         item: item
       });
+  }
+
+  private showServerIpMissingToast(err: Error){
+    if (err.constructor.name === 'NativeStorageError'){
+      let toast = this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط',duration: 3000});
+      toast.present();
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 import { EpisodeService } from './service';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 @Component({
   selector: 'page-episode',
@@ -11,7 +11,8 @@ export class EpisodePage {
 
   items: Array<{id: number, videoUrl: string, durationSeconds: number, watched: boolean}>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private episodeService: EpisodeService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     private episodeService: EpisodeService, private toastController: ToastController) {
 
     var navItem: any = navParams.get('item');
 
@@ -21,9 +22,10 @@ export class EpisodePage {
         console.log(data);
       },
       err => {
+        this.showServerIpMissingToast(err)
         console.log(err);
       }, 
-      () => console.log('Movie Search Complete')
+      () => console.log('completed')
     );
   }
 
@@ -35,10 +37,19 @@ export class EpisodePage {
           },
           err => {
             console.log(err);
+            this.showServerIpMissingToast(err)
           }, 
-          () => console.log('Movie Search Complete')
+          () => console.log('completed')
         );
+        
       window.open(item.videoUrl, '_system');
+  }
+
+  private showServerIpMissingToast(err: Error){
+    if (err.constructor.name === 'NativeStorageError'){
+      let toast = this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط',duration: 3000});
+      toast.present();
+    }
   }
 
 }

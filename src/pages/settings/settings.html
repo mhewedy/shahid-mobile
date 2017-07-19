@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="serverIp" placeholder="عنوان الخادم (مثلا 10.0.0.3)"></ion-input>
+  </ion-item>
+
+  <button ion-button full (click)="saveServerIp($event)">حفظ</button>
+
+</ion-content>
