@@ -1,4 +1,4 @@
-See https://github.com/mhewedy/shahid/blob/master/README.md
+See: https://github.com/mhewedy/shahid
 
 To run use: `ionic serve`
 To deploy to android use: `ionic cordova run android --device`
