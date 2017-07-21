@@ -1,5 +1,6 @@
 <ion-header>
   <ion-navbar>
+    <h3>مسلسل {{title}}</h3>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,9 +8,13 @@
 </ion-header>
 
 <ion-content>
+
+  <div style="text-align: center">
+    <ion-badge *ngFor="let tag of tags" style="margin-left: 5px; padding: 5px 5px 5px 5px;" > {{tag}} </ion-badge>
+  </div>
   <ion-list>
     <button ion-item *ngFor="let item of items; let i = index" (click)="itemTapped($event, item)">
-      <div padding style="font-size: 17px">
+      <div style="margin: 1px 1px 1px 1px; font-size: 17px">
         مشاهدة الحلقة رقم {{i + 1}}
         <span *ngIf="item.watched" > ✔ </span>
         <div style="color: gray; font-size: 15px">{{(item.durationSeconds / 60) | number:'1.0-0' }} دقيقة</div>

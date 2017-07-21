@@ -11,6 +11,8 @@ export class EpisodePage {
 
   items: Array<{id: number, videoUrl: string, durationSeconds: number, watched: boolean}>;
   seriesId: string;
+  title: string;
+  tags: Array<string>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
      private episodeService: EpisodeService, private toastController: ToastController) {
@@ -39,7 +41,9 @@ export class EpisodePage {
   private loadList(){
     this.episodeService.listEpisode(this.seriesId).subscribe(
       data => {
-        this.items = data;
+        this.items = data.episodes;
+        this.tags = data.tags;
+        this.title = data.title;
         console.log(data);
       },
       err => {
