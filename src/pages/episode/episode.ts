@@ -13,6 +13,7 @@ export class EpisodePage {
   seriesId: string;
   title: string;
   tags: Array<string>;
+  episodeCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
      private episodeService: EpisodeService, private toastController: ToastController) {
@@ -44,6 +45,7 @@ export class EpisodePage {
         this.items = data.episodes;
         this.tags = data.tags;
         this.title = data.title;
+        this.episodeCount = data.episodeCount - 1;
         console.log(data);
       },
       err => {
