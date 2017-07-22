@@ -1,3 +1,4 @@
+import { MovieTags } from './../pages/movieTags/movieTags';
 
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
@@ -27,6 +28,7 @@ export class MyApp {
     this.pages = [
       { title: 'الرئيسية', component: HomePage },
       { title: 'تصنيفات المسلسلات', component: ListPage },
+      { title: 'تصنيفات الأفلام', component: MovieTags },
       { title: 'الضبط', component: SettingsPage }
     ];
 

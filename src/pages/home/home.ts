@@ -11,8 +11,10 @@ import { ToastController } from 'ionic-angular';
 })
 export class HomePage {
 
-  items: Array<{id: number, sid: string, title: string, posterUrl: string}>;
   term: string;
+
+  seriesItems: Array<{id: number, sid: string, title: string, posterUrl: string}>;
+  movieItems: Array<{id: number, sid: string, title: string, posterUrl: string, videoUrl: string, durationSeconds: number}>;
 
   showNoDataFound: boolean = false;
 
@@ -24,9 +26,14 @@ export class HomePage {
         (readySource) => {
           
           var navItems: any = navParams.get('items');
+
+          console.log(navItems);
+
           if (navItems != null){
-              if (navItems.length > 0){
-                this.items = navItems; 
+              if ((navItems.seriesList && navItems.seriesList.length > 0) || 
+                navItems.movieList && navItems.movieList.length > 0){
+                this.seriesItems = navItems.seriesList; 
+                this.movieItems = navItems.movieList;
               }else{
                   this.showNoDataFound = true;
                   console.log("no data found!")
@@ -34,7 +41,8 @@ export class HomePage {
           }else{
             this.recentAndSearchService.listsRecent().subscribe(
                   data => {
-                    this.items = data; 
+                    this.seriesItems = data.seriesList; 
+                    this.movieItems = data.movieList;
                   },
                   err => {
                     this.showServerIpMissingToast(err)
@@ -49,7 +57,7 @@ export class HomePage {
 
   search(event) {
     if (this.term){
-      this.recentAndSearchService.search(this.term).subscribe(
+       this.recentAndSearchService.search(this.term).subscribe(
               data => {
                 this.navCtrl.push(HomePage, {items: data});
               },
@@ -62,12 +70,17 @@ export class HomePage {
     }
   }
 
-  itemTapped(event, item){
+  seriesItemTapped(event, item){
       console.log(item.id);
       
       this.navCtrl.push(EpisodePage, {
         item: item
       });
+  }
+
+  movieItemTapped(event, item){
+      console.log(item.id);
+      window.open(item.videoUrl, '_system');
   }
 
   private showServerIpMissingToast(err: Error){

@@ -14,16 +14,29 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <h3 *ngIf="seriesItems && movieItems" >المسلسلات</h3>
   <ion-grid>
-    <ion-row *ngFor="let itemPairs of items">
-      <ion-col col-6 *ngFor="let item of itemPairs" (click)="itemTapped($event, item)">
+    <ion-row *ngFor="let itemPairs of seriesItems">
+      <ion-col col-6 *ngFor="let item of itemPairs" (click)="seriesItemTapped($event, item)">
         <img width="160" height="90" [src]="item.posterUrl" />
         <div style="vertical-align:top; font-size: 16px; text-align: center">{{item.title}}</div>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf="showNoDataFound" padding>
+
+  <h3 *ngIf="seriesItems && movieItems" >الأفلام</h3>
+  <ion-grid>
+    <ion-row *ngFor="let itemPairs of movieItems">
+      <ion-col col-6 *ngFor="let item of itemPairs" (click)="movieItemTapped($event, item)">
+        <img width="160" height="90" [src]="item.posterUrl" />
+        <div style="vertical-align:top; font-size: 16px; text-align: center">{{item.title}}</div>
+        <div style="color: gray; font-size: 12px; vertical-align:top; text-align: center">{{(item.durationSeconds / 60) | number:'1.0-0' }} دقيقة</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="showNoDataFound">
       لا توجد نتيجة للبحث, حاول مره أخرى
   </div> 
 </ion-content>

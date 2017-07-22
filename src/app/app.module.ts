@@ -1,3 +1,4 @@
+import { MovieTags } from './../pages/movieTags/movieTags';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +22,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ListPage,
     EpisodePage,
+    MovieTags,
     SettingsPage
   ],
   imports: [
@@ -34,6 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ListPage,
     EpisodePage,
+    MovieTags,
     SettingsPage
   ],
   providers: [

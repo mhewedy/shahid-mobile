@@ -1,32 +1,32 @@
-import { Observable } from 'rxjs/Observable';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { Observable } from 'rxjs/Observable';
 import {Http} from '@angular/http';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/from';
   
-export class RecentAndSearchService {  
+export class TagService {  
     static get parameters() {
         return [[Http], [NativeStorage]];
     }
   
     constructor(private http:Http, private nativeStorage: NativeStorage) {
-        
+         
     }
   
-    listsRecent() {
+    listTags() {
         return Observable.from(this.nativeStorage.getItem("serverIp"))
             .switchMap(serverIp => 
-                this.http.get('http://' + serverIp + ':8801/series/recent')
+                this.http.get('http://' + serverIp + ':8801/movie/tags')
                 .map(res => res.json())
             )
     }
 
-    search(term: string){
+    findByTag(tag: string){
         return Observable.from(this.nativeStorage.getItem("serverIp"))
             .switchMap(serverIp => 
-                this.http.get('http://' + serverIp + ':8801/search?term=' + encodeURI(term))
+                this.http.get('http://' + serverIp + ':8801/movie/tag?tag=' + encodeURI(tag))
                 .map(res => res.json())
             )
     }
