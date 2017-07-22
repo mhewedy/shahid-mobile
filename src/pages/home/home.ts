@@ -55,6 +55,11 @@ export class HomePage {
       );
   }
 
+  showSubTitle(): boolean {
+    return this.seriesItems != null && this.seriesItems.length > 0 
+      && this.movieItems != null && this.movieItems.length > 0 ;
+  }
+
   search(event) {
     if (this.term){
        this.recentAndSearchService.search(this.term).subscribe(

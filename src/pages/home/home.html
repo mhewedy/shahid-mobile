@@ -15,7 +15,7 @@
 </ion-header>
 
 <ion-content padding>
-  <h3 *ngIf="seriesItems && movieItems" >المسلسلات</h3>
+  <h3 *ngIf="showSubTitle()" >المسلسلات</h3>
   <ion-grid>
     <ion-row *ngFor="let itemPairs of seriesItems">
       <ion-col col-6 *ngFor="let item of itemPairs" (click)="seriesItemTapped($event, item)">
@@ -25,7 +25,7 @@
     </ion-row>
   </ion-grid>
 
-  <h3 *ngIf="seriesItems && movieItems" >الأفلام</h3>
+  <h3 *ngIf="showSubTitle()" >الأفلام</h3>
   <ion-grid>
     <ion-row *ngFor="let itemPairs of movieItems">
       <ion-col col-6 *ngFor="let item of itemPairs" (click)="movieItemTapped($event, item)">
