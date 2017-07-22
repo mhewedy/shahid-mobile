@@ -18,7 +18,7 @@ export class TagService {
     listTags() {
         return Observable.from(this.nativeStorage.getItem("serverIp"))
             .switchMap(serverIp => 
-                this.http.get('http://' + serverIp + ':8801/tags')
+                this.http.get('http://' + serverIp + ':8801/series/tags')
                 .map(res => res.json())
             )
     }
@@ -26,7 +26,7 @@ export class TagService {
     findByTag(tag: string){
         return Observable.from(this.nativeStorage.getItem("serverIp"))
             .switchMap(serverIp => 
-                this.http.get('http://' + serverIp + ':8801/tag?tag=' + encodeURI(tag))
+                this.http.get('http://' + serverIp + ':8801/series/tag?tag=' + encodeURI(tag))
                 .map(res => res.json())
             )
     }

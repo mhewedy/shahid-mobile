@@ -18,7 +18,7 @@ export class RecentAndSearchService {
     listsRecent() {
         return Observable.from(this.nativeStorage.getItem("serverIp"))
             .switchMap(serverIp => 
-                this.http.get('http://' + serverIp + ':8801/recent')
+                this.http.get('http://' + serverIp + ':8801/series/recent')
                 .map(res => res.json())
             )
     }
