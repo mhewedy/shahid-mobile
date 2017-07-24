@@ -13,6 +13,7 @@ export class EpisodePage {
   seriesId: string;
   title: string;
   tags: Array<string>;
+  posterUrl: string;
   episodeCount: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -23,7 +24,7 @@ export class EpisodePage {
     this.loadList();
   }
 
-  itemTapped(event, item){
+  itemTapped(event, item, index){
       console.log("set as watched" + item.id);
       this.episodeService.setAsWatched(item.id).subscribe(
           data => {
@@ -36,7 +37,9 @@ export class EpisodePage {
           () => console.log('completed')
         );
       this.loadList();
-      window.open(item.videoUrl, '_system');
+      var queryString = '?title=' + this.title + '&episode=' + index + '&durationSeconds=' 
+        + item.durationSeconds + "&posterUrl=" + this.posterUrl + "&seriesId=" + this.seriesId;
+      window.open(item.videoUrl + queryString, '_system');
   }
 
   private loadList(){
@@ -46,6 +49,7 @@ export class EpisodePage {
         this.tags = data.tags;
         this.title = data.title;
         this.episodeCount = data.episodeCount - 1;
+        this.posterUrl = data.posterUrl;
         console.log(data);
       },
       err => {

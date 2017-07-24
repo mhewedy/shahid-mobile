@@ -14,7 +14,7 @@ export class HomePage {
   term: string;
 
   seriesItems: Array<{id: number, sid: string, title: string, posterUrl: string}>;
-  movieItems: Array<{id: number, sid: string, title: string, posterUrl: string, videoUrl: string, durationSeconds: number}>;
+  movieItems: Array<{id: number, sid: string, title: string, posterUrl: string, videoUrl: string, laUrl: string, durationSeconds: number}>;
 
   showNoDataFound: boolean = false;
 
@@ -85,7 +85,9 @@ export class HomePage {
 
   movieItemTapped(event, item){
       console.log(item.id);
-      window.open(item.videoUrl, '_system');
+      var queryString = '?title=' + item.title + '&laUrl=' + encodeURIComponent(item.laUrl)
+       + '&durationSeconds=' + item.durationSeconds + "&posterUrl=" + item.posterUrl;
+      window.open(item.videoUrl + queryString, '_system');
   }
 
   private showServerIpMissingToast(err: Error){

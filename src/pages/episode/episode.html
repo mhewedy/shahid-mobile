@@ -13,7 +13,7 @@
     <ion-badge *ngFor="let tag of tags" style="margin-left: 5px; padding: 5px 5px 5px 5px;" > {{tag}} </ion-badge>
   </div>
   <ion-list>
-    <button ion-item *ngFor="let item of items; let i = index" (click)="itemTapped($event, item)">
+    <button ion-item *ngFor="let item of items; let i = index" (click)="itemTapped($event, item, i+1)">
       <div style="margin: 1px 1px 1px 1px; font-size: 17px">
         مشاهدة الحلقة رقم {{i + 1}}
         <span *ngIf="item.watched" > ✔ </span>
