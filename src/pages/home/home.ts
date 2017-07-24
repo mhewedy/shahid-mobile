@@ -46,7 +46,7 @@ export class HomePage {
                   },
                   err => {
                     this.showServerIpMissingToast(err)
-                    console.log(err);
+                    console.log(JSON.stringify(err));
                   },
                   () => console.log('completed')
                 );
