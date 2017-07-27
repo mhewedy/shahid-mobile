@@ -14,7 +14,7 @@ export class HomePage {
   term: string;
 
   seriesItems: Array<{id: number, sid: string, title: string, posterUrl: string}>;
-  movieItems: Array<{id: number, sid: string, title: string, posterUrl: string, videoUrl: string, laUrl: string, durationSeconds: number, tags: Array<string>}>;
+  movieItems: Array<{id: number, sid: string, title: string, posterUrl: string, videoUrl: string, laUrl: string, durationSeconds: number}>;
 
   showNoDataFound: boolean = false;
 
@@ -85,9 +85,21 @@ export class HomePage {
 
   movieItemTapped(event, item){
       console.log(item.id);
-      var queryString = '?title=' + item.title + '&laUrl=' + encodeURIComponent(item.laUrl)
-       + '&durationSeconds=' + item.durationSeconds + "&posterUrl=" + item.posterUrl + "&tags=" + encodeURIComponent(item.tags);
-      window.open(item.videoUrl + queryString, '_system');
+
+      this.recentAndSearchService.getMovieTags(item.id).subscribe(
+          data => {
+              console.log(data);
+              var queryString = '?title=' + item.title + '&laUrl=' + encodeURIComponent(item.laUrl)
+                + '&durationSeconds=' + item.durationSeconds + "&posterUrl=" + item.posterUrl 
+                + "&tags=" + encodeURIComponent(data);
+              window.open(item.videoUrl + queryString, '_system');
+          },
+          err => {
+                this.showServerIpMissingToast(err)
+                console.log(err);
+          },
+          () => console.log("completed")
+      );
   }
 
   private showServerIpMissingToast(err: Error){

@@ -30,4 +30,12 @@ export class RecentAndSearchService {
                 .map(res => res.json())
             )
     }
+
+    getMovieTags(movieId: number){
+        return Observable.from(this.nativeStorage.getItem("serverIp"))
+            .switchMap(serverIp => 
+                this.http.get('http://' + serverIp + ':8801/movie/tags/' + movieId)
+                .map(res => res.json())
+            )
+    }
 }
