@@ -1,3 +1,4 @@
+import { NativeStorage } from '@ionic-native/native-storage';
 import { EpisodeService } from './service';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
@@ -15,13 +16,17 @@ export class EpisodePage {
   tags: Array<string>;
   posterUrl: string;
   episodeCount: number = 0;
+  startPosition: number = null;
+  endPosition: number = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-     private episodeService: EpisodeService, private toastController: ToastController) {
+     private episodeService: EpisodeService, private toastController: ToastController,
+     private nativeStorage: NativeStorage) {
 
     var navItem: any = navParams.get('item');
     this.seriesId = navItem.id;
     this.loadList();
+    this.loadVideoPositions();
   }
 
   itemTapped(event, item, index){
@@ -38,7 +43,8 @@ export class EpisodePage {
         );
       this.loadList();
       var queryString = '?title=' + this.title + '&episode=' + index + '&durationSeconds=' 
-        + item.durationSeconds + "&posterUrl=" + this.posterUrl + "&seriesId=" + this.seriesId;
+        + item.durationSeconds + "&posterUrl=" + this.posterUrl + "&seriesId=" + this.seriesId
+        + "&startPosition=" + this.startPosition + "&endPosition=" + this.endPosition;
       window.open(item.videoUrl + queryString, '_system');
   }
 
@@ -64,6 +70,22 @@ export class EpisodePage {
     if (err.constructor.name === 'NativeStorageError'){
       this.toastController.create({message: 'قم بوضع عنوان الخادم في قائمة الضبط' ,duration: 3000}).present();
     }
+  }
+
+  private loadVideoPositions(){
+    this.nativeStorage.getItem("startPosition_" + this.seriesId)
+      .then(value => this.startPosition = value, err =>  console.log(err));
+
+    this.nativeStorage.getItem("endPosition_" + this.seriesId)
+      .then(value => this.endPosition = value, err =>  console.log(err));
+  }
+
+  private saveStartPosition(){
+    this.nativeStorage.setItem("startPosition_" + this.seriesId, this.startPosition);
+  }
+
+  private saveEndPosition(){
+    this.nativeStorage.setItem("endPosition_" + this.seriesId, this.endPosition);
   }
 
 }

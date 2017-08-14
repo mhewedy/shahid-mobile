@@ -12,6 +12,14 @@
   <div style="text-align: center">
     <ion-badge *ngFor="let tag of tags" style="margin-left: 5px; padding: 5px 5px 5px 5px;" > {{tag}} </ion-badge>
   </div>
+
+  <div>
+    <ion-item>
+      <ion-input type="number" placeholder="البداية عند الثانية" [(ngModel)]="startPosition" (ionChange)="saveStartPosition()" ></ion-input>
+      <ion-input type="number" placeholder="النهاية عند الثانية" [(ngModel)]="endPosition" (ionChange)="saveEndPosition()"></ion-input>
+    </ion-item>
+  </div>
+
   <ion-list>
     <button ion-item *ngFor="let item of items; let i = index" (click)="itemTapped($event, item, i+1)">
       <div style="margin: 1px 1px 1px 1px; font-size: 17px">
